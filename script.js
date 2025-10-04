@@ -25,7 +25,7 @@ function createFallingLanterns() {
     }, 800);
 }
 
-// Tạo hiệu ứng pháo hoa
+// Tạo hiệu ứng pháo hoa cơ bản
 function createFireworks() {
     const fireworksContainer = document.querySelector('.fireworks');
     
@@ -44,6 +44,99 @@ function createFireworks() {
             }
         }, 2000);
     }, 3000);
+}
+
+// Tạo pháo hoa nghệ thuật loại 1 - Hoa cúc
+function createChrysanthemumFirework(x, y) {
+    const container = document.querySelector('.fireworks');
+    const centerX = x;
+    const centerY = y;
+    
+    for (let i = 0; i < 20; i++) {
+        const petal = document.createElement('div');
+        petal.className = 'firework chrysanthemum-petal';
+        petal.style.left = centerX + 'px';
+        petal.style.top = centerY + 'px';
+        petal.style.animationDelay = (i * 0.05) + 's';
+        
+        const angle = (i * 18) * Math.PI / 180;
+        const distance = 80 + Math.random() * 40;
+        const endX = centerX + Math.cos(angle) * distance;
+        const endY = centerY + Math.sin(angle) * distance;
+        
+        petal.style.setProperty('--end-x', endX + 'px');
+        petal.style.setProperty('--end-y', endY + 'px');
+        
+        container.appendChild(petal);
+        
+        setTimeout(() => {
+            if (petal.parentNode) {
+                petal.parentNode.removeChild(petal);
+            }
+        }, 3000);
+    }
+}
+
+// Tạo pháo hoa nghệ thuật loại 2 - Vòng tròn
+function createCircleFirework(x, y) {
+    const container = document.querySelector('.fireworks');
+    const centerX = x;
+    const centerY = y;
+    
+    for (let i = 0; i < 16; i++) {
+        const spark = document.createElement('div');
+        spark.className = 'firework circle-spark';
+        spark.style.left = centerX + 'px';
+        spark.style.top = centerY + 'px';
+        spark.style.animationDelay = (i * 0.1) + 's';
+        
+        const angle = (i * 22.5) * Math.PI / 180;
+        const distance = 60 + Math.random() * 30;
+        const endX = centerX + Math.cos(angle) * distance;
+        const endY = centerY + Math.sin(angle) * distance;
+        
+        spark.style.setProperty('--end-x', endX + 'px');
+        spark.style.setProperty('--end-y', endY + 'px');
+        
+        container.appendChild(spark);
+        
+        setTimeout(() => {
+            if (spark.parentNode) {
+                spark.parentNode.removeChild(spark);
+            }
+        }, 2500);
+    }
+}
+
+// Tạo pháo hoa nghệ thuật loại 3 - Sao băng
+function createMeteorFirework(x, y) {
+    const container = document.querySelector('.fireworks');
+    const centerX = x;
+    const centerY = y;
+    
+    for (let i = 0; i < 12; i++) {
+        const meteor = document.createElement('div');
+        meteor.className = 'firework meteor-trail';
+        meteor.style.left = centerX + 'px';
+        meteor.style.top = centerY + 'px';
+        meteor.style.animationDelay = (i * 0.08) + 's';
+        
+        const angle = (i * 30) * Math.PI / 180;
+        const distance = 100 + Math.random() * 50;
+        const endX = centerX + Math.cos(angle) * distance;
+        const endY = centerY + Math.sin(angle) * distance;
+        
+        meteor.style.setProperty('--end-x', endX + 'px');
+        meteor.style.setProperty('--end-y', endY + 'px');
+        
+        container.appendChild(meteor);
+        
+        setTimeout(() => {
+            if (meteor.parentNode) {
+                meteor.parentNode.removeChild(meteor);
+            }
+        }, 4000);
+    }
 }
 
 // Tạo hiệu ứng sao rơi
@@ -221,6 +314,130 @@ function addFullScreenEffect() {
     document.head.appendChild(style);
 }
 
+// Tương tác với 3 món quà
+function addGiftInteractions() {
+    const gifts = document.querySelectorAll('.gift');
+    
+    gifts.forEach((gift, index) => {
+        gift.addEventListener('click', (e) => {
+            e.stopPropagation();
+            
+            // Hiệu ứng click quà
+            gift.style.transform = 'scale(1.2) rotate(10deg)';
+            gift.style.transition = 'all 0.3s ease';
+            
+            setTimeout(() => {
+                gift.style.transform = 'scale(1) rotate(0deg)';
+            }, 300);
+            
+            // Tạo pháo hoa theo loại quà
+            const rect = gift.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const fireworkType = gift.getAttribute('data-firework');
+            
+            switch(fireworkType) {
+                case 'type1':
+                    createChrysanthemumFirework(centerX, centerY);
+                    showGiftMessage('🎁 Quà Bí Mật 1: Chúc bé có một mùa Trung Thu ngập tràn niềm vui!');
+                    break;
+                case 'type2':
+                    createCircleFirework(centerX, centerY);
+                    showGiftMessage('🎁 Quà Bí Mật 2: Chúc bé luôn khỏe mạnh và học giỏi!');
+                    break;
+                case 'type3':
+                    createMeteorFirework(centerX, centerY);
+                    showGiftMessage('🎁 Quà Bí Mật 3: Chúc bé có nhiều bạn bè và luôn hạnh phúc!');
+                    break;
+            }
+        });
+        
+        // Hiệu ứng hover
+        gift.addEventListener('mouseenter', () => {
+            gift.style.transform = 'scale(1.1) translateY(-10px)';
+            gift.style.boxShadow = '0 15px 30px rgba(255, 221, 68, 0.4)';
+        });
+        
+        gift.addEventListener('mouseleave', () => {
+            gift.style.transform = 'scale(1) translateY(0px)';
+            gift.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.3)';
+        });
+    });
+}
+
+// Hiển thị thông báo quà
+function showGiftMessage(message) {
+    // Xóa thông báo cũ nếu có
+    const oldMessage = document.querySelector('.gift-message');
+    if (oldMessage) {
+        oldMessage.remove();
+    }
+    
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'gift-message';
+    messageDiv.textContent = message;
+    messageDiv.style.cssText = `
+        position: fixed;
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+        color: white;
+        padding: 20px 30px;
+        border-radius: 15px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        animation: messageSlideIn 0.5s ease-out;
+        max-width: 80%;
+    `;
+    
+    document.body.appendChild(messageDiv);
+    
+    // Tự động ẩn sau 4 giây
+    setTimeout(() => {
+        messageDiv.style.animation = 'messageSlideOut 0.5s ease-in';
+        setTimeout(() => {
+            if (messageDiv.parentNode) {
+                messageDiv.parentNode.removeChild(messageDiv);
+            }
+        }, 500);
+    }, 4000);
+}
+
+// Hiệu ứng cây cổ thụ
+function addAncientTreeEffects() {
+    const ancientTree = document.querySelector('.ancient-tree');
+    
+    if (ancientTree) {
+        ancientTree.addEventListener('click', () => {
+            // Tạo hiệu ứng lá rơi
+            const leaves = document.querySelectorAll('.leaf');
+            leaves.forEach((leaf, index) => {
+                setTimeout(() => {
+                    leaf.style.animation = 'none';
+                    leaf.style.transform = 'translateY(200px) rotate(720deg)';
+                    leaf.style.opacity = '0';
+                    leaf.style.transition = 'all 3s ease-out';
+                }, index * 100);
+            });
+            
+            // Khôi phục sau 4 giây
+            setTimeout(() => {
+                leaves.forEach(leaf => {
+                    leaf.style.animation = 'leafSparkle 3s ease-in-out infinite';
+                    leaf.style.transform = 'translateY(0) rotate(0deg)';
+                    leaf.style.opacity = '1';
+                    leaf.style.transition = 'none';
+                });
+            }, 4000);
+        });
+    }
+}
+
 // Khởi tạo tất cả hiệu ứng
 document.addEventListener('DOMContentLoaded', () => {
     createFallingLanterns();
@@ -231,6 +448,8 @@ document.addEventListener('DOMContentLoaded', () => {
     addMoonParallax();
     addTextEffects();
     addFullScreenEffect();
+    addGiftInteractions();
+    addAncientTreeEffects();
     
     // Thêm hiệu ứng âm thanh nếu người dùng tương tác
     document.addEventListener('click', () => {
