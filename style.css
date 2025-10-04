@@ -177,8 +177,8 @@ body {
 .lantern:nth-child(9) { left: 90%; animation-delay: 0.3s; }
 .lantern:nth-child(10) { left: 15%; animation-delay: 2.2s; }
 
-/* Cây cổ thụ lấp lánh ở giữa màn hình */
-.ancient-tree-container {
+/* Cây anh đào cổ thụ lấp lánh ở giữa màn hình */
+.ancient-cherry-tree-container {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -187,53 +187,85 @@ body {
     pointer-events: none;
 }
 
-.ancient-tree {
+.ancient-cherry-tree {
     position: relative;
-    width: 200px;
-    height: 300px;
-    animation: treeGlow 4s ease-in-out infinite alternate;
+    width: 400px;
+    height: 500px;
+    animation: cherryTreeGlow 6s ease-in-out infinite alternate;
 }
 
-.tree-trunk {
+/* Thân cây chính */
+.main-trunk {
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 40px;
-    height: 120px;
+    width: 80px;
+    height: 200px;
     background: linear-gradient(90deg, #8B4513, #A0522D, #8B4513);
-    border-radius: 20px;
+    border-radius: 40px;
     box-shadow: 
-        inset -5px 0 10px rgba(0, 0, 0, 0.3),
-        inset 5px 0 10px rgba(255, 255, 255, 0.1);
+        inset -10px 0 20px rgba(0, 0, 0, 0.4),
+        inset 10px 0 20px rgba(255, 255, 255, 0.1),
+        0 0 30px rgba(139, 69, 19, 0.3);
 }
 
-.tree-branches {
+.trunk-texture {
     position: absolute;
-    top: 20px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 8px,
+            rgba(0, 0, 0, 0.1) 8px,
+            rgba(0, 0, 0, 0.1) 10px
+        );
+    border-radius: 40px;
+}
+
+.trunk-shadows {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.2), transparent 50%, rgba(0, 0, 0, 0.1));
+    border-radius: 40px;
+}
+
+/* Các cành cây chính */
+.main-branches {
+    position: absolute;
+    top: 50px;
     left: 50%;
     transform: translateX(-50%);
-    width: 180px;
-    height: 200px;
+    width: 350px;
+    height: 300px;
 }
 
-.branch {
+.main-branch {
     position: absolute;
     background: linear-gradient(90deg, #8B4513, #A0522D);
-    border-radius: 3px;
+    border-radius: 8px;
     transform-origin: left center;
+    box-shadow: 0 0 10px rgba(139, 69, 19, 0.3);
 }
 
-.branch-1 { width: 60px; height: 4px; top: 20px; left: 0; transform: rotate(-30deg); }
-.branch-2 { width: 50px; height: 4px; top: 40px; left: 0; transform: rotate(-15deg); }
-.branch-3 { width: 70px; height: 4px; top: 60px; left: 0; transform: rotate(0deg); }
-.branch-4 { width: 55px; height: 4px; top: 80px; left: 0; transform: rotate(15deg); }
-.branch-5 { width: 65px; height: 4px; top: 100px; left: 0; transform: rotate(30deg); }
-.branch-6 { width: 45px; height: 4px; top: 30px; right: 0; transform: rotate(30deg); }
-.branch-7 { width: 60px; height: 4px; top: 50px; right: 0; transform: rotate(15deg); }
-.branch-8 { width: 50px; height: 4px; top: 70px; right: 0; transform: rotate(-15deg); }
+.branch-left-1 { width: 120px; height: 12px; top: 20px; left: 0; transform: rotate(-45deg); }
+.branch-left-2 { width: 100px; height: 10px; top: 60px; left: 0; transform: rotate(-25deg); }
+.branch-left-3 { width: 80px; height: 8px; top: 100px; left: 0; transform: rotate(-15deg); }
+.branch-right-1 { width: 120px; height: 12px; top: 20px; right: 0; transform: rotate(45deg); }
+.branch-right-2 { width: 100px; height: 10px; top: 60px; right: 0; transform: rotate(25deg); }
+.branch-right-3 { width: 80px; height: 8px; top: 100px; right: 0; transform: rotate(15deg); }
+.branch-center-1 { width: 60px; height: 8px; top: 40px; left: 50%; transform: translateX(-50%) rotate(0deg); }
+.branch-center-2 { width: 80px; height: 10px; top: 80px; left: 50%; transform: translateX(-50%) rotate(0deg); }
 
-.magical-leaves {
+/* Các cành phụ */
+.sub-branches {
     position: absolute;
     top: 0;
     left: 0;
@@ -241,70 +273,166 @@ body {
     height: 100%;
 }
 
-.leaf {
+.sub-branch {
     position: absolute;
-    width: 12px;
-    height: 12px;
-    background: radial-gradient(circle, #90EE90, #32CD32, #228B22);
-    border-radius: 50% 0 50% 0;
-    animation: leafSparkle 3s ease-in-out infinite;
-    box-shadow: 0 0 10px rgba(144, 238, 144, 0.6);
+    background: linear-gradient(90deg, #A0522D, #CD853F);
+    border-radius: 4px;
+    transform-origin: left center;
+    box-shadow: 0 0 5px rgba(160, 82, 45, 0.2);
 }
 
-.leaf-1 { top: 10px; left: 20px; animation-delay: 0s; }
-.leaf-2 { top: 30px; left: 15px; animation-delay: 0.2s; }
-.leaf-3 { top: 50px; left: 25px; animation-delay: 0.4s; }
-.leaf-4 { top: 70px; left: 20px; animation-delay: 0.6s; }
-.leaf-5 { top: 90px; left: 30px; animation-delay: 0.8s; }
-.leaf-6 { top: 110px; left: 25px; animation-delay: 1s; }
-.leaf-7 { top: 20px; right: 25px; animation-delay: 0.3s; }
-.leaf-8 { top: 40px; right: 20px; animation-delay: 0.5s; }
-.leaf-9 { top: 60px; right: 30px; animation-delay: 0.7s; }
-.leaf-10 { top: 80px; right: 25px; animation-delay: 0.9s; }
-.leaf-11 { top: 100px; right: 20px; animation-delay: 1.1s; }
-.leaf-12 { top: 15px; left: 50%; animation-delay: 0.1s; }
-.leaf-13 { top: 35px; left: 50%; animation-delay: 0.4s; }
-.leaf-14 { top: 55px; left: 50%; animation-delay: 0.7s; }
-.leaf-15 { top: 75px; left: 50%; animation-delay: 1s; }
-.leaf-16 { top: 95px; left: 50%; animation-delay: 1.3s; }
+.sub-1 { width: 40px; height: 4px; top: 30px; left: 20px; transform: rotate(-60deg); }
+.sub-2 { width: 35px; height: 4px; top: 50px; left: 15px; transform: rotate(-40deg); }
+.sub-3 { width: 30px; height: 3px; top: 70px; left: 25px; transform: rotate(-20deg); }
+.sub-4 { width: 25px; height: 3px; top: 90px; left: 20px; transform: rotate(-10deg); }
+.sub-5 { width: 40px; height: 4px; top: 30px; right: 20px; transform: rotate(60deg); }
+.sub-6 { width: 35px; height: 4px; top: 50px; right: 15px; transform: rotate(40deg); }
+.sub-7 { width: 30px; height: 3px; top: 70px; right: 25px; transform: rotate(20deg); }
+.sub-8 { width: 25px; height: 3px; top: 90px; right: 20px; transform: rotate(10deg); }
+.sub-9 { width: 20px; height: 3px; top: 40px; left: 50%; transform: translateX(-50%) rotate(-30deg); }
+.sub-10 { width: 20px; height: 3px; top: 60px; left: 50%; transform: translateX(-50%) rotate(30deg); }
+.sub-11 { width: 20px; height: 3px; top: 80px; left: 50%; transform: translateX(-50%) rotate(-20deg); }
+.sub-12 { width: 20px; height: 3px; top: 100px; left: 50%; transform: translateX(-50%) rotate(20deg); }
 
-.tree-glow {
+/* Hoa anh đào lấp lánh */
+.cherry-blossoms {
     position: absolute;
-    top: -20px;
-    left: -20px;
-    right: -20px;
-    bottom: -20px;
-    background: radial-gradient(circle, rgba(144, 238, 144, 0.1), transparent 70%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.blossom-cluster {
+    position: absolute;
+}
+
+.cluster-1 { top: 20px; left: 30px; }
+.cluster-2 { top: 60px; left: 20px; }
+.cluster-3 { top: 100px; left: 25px; }
+.cluster-4 { top: 20px; right: 30px; }
+.cluster-5 { top: 60px; right: 20px; }
+.cluster-6 { top: 100px; right: 25px; }
+
+.blossom {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle, #ffb6c1, #ffc0cb, #ff69b4);
+    border-radius: 50% 0 50% 0;
+    animation: blossomSparkle 4s ease-in-out infinite;
+    box-shadow: 0 0 15px rgba(255, 182, 193, 0.8);
+    transform-origin: center;
+}
+
+.blossom-1 { top: 0px; left: 0px; animation-delay: 0s; }
+.blossom-2 { top: 8px; left: 12px; animation-delay: 0.2s; }
+.blossom-3 { top: 16px; left: 6px; animation-delay: 0.4s; }
+.blossom-4 { top: 24px; left: 18px; animation-delay: 0.6s; }
+.blossom-5 { top: 32px; left: 3px; animation-delay: 0.8s; }
+.blossom-6 { top: 0px; left: 0px; animation-delay: 0.1s; }
+.blossom-7 { top: 8px; left: 12px; animation-delay: 0.3s; }
+.blossom-8 { top: 16px; left: 6px; animation-delay: 0.5s; }
+.blossom-9 { top: 24px; left: 18px; animation-delay: 0.7s; }
+.blossom-10 { top: 32px; left: 3px; animation-delay: 0.9s; }
+.blossom-11 { top: 0px; left: 0px; animation-delay: 0.15s; }
+.blossom-12 { top: 8px; left: 12px; animation-delay: 0.35s; }
+.blossom-13 { top: 16px; left: 6px; animation-delay: 0.55s; }
+.blossom-14 { top: 24px; left: 18px; animation-delay: 0.75s; }
+.blossom-15 { top: 32px; left: 3px; animation-delay: 0.95s; }
+.blossom-16 { top: 0px; left: 0px; animation-delay: 0.05s; }
+.blossom-17 { top: 8px; left: 12px; animation-delay: 0.25s; }
+.blossom-18 { top: 16px; left: 6px; animation-delay: 0.45s; }
+.blossom-19 { top: 24px; left: 18px; animation-delay: 0.65s; }
+.blossom-20 { top: 32px; left: 3px; animation-delay: 0.85s; }
+.blossom-21 { top: 0px; left: 0px; animation-delay: 0.12s; }
+.blossom-22 { top: 8px; left: 12px; animation-delay: 0.32s; }
+.blossom-23 { top: 16px; left: 6px; animation-delay: 0.52s; }
+.blossom-24 { top: 24px; left: 18px; animation-delay: 0.72s; }
+.blossom-25 { top: 32px; left: 3px; animation-delay: 0.92s; }
+.blossom-26 { top: 0px; left: 0px; animation-delay: 0.08s; }
+.blossom-27 { top: 8px; left: 12px; animation-delay: 0.28s; }
+.blossom-28 { top: 16px; left: 6px; animation-delay: 0.48s; }
+.blossom-29 { top: 24px; left: 18px; animation-delay: 0.68s; }
+.blossom-30 { top: 32px; left: 3px; animation-delay: 0.88s; }
+
+/* Hiệu ứng ánh sáng ma thuật */
+.magical-aura {
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    right: -50px;
+    bottom: -50px;
+    background: radial-gradient(circle, rgba(255, 182, 193, 0.15), transparent 70%);
     border-radius: 50%;
-    animation: treeGlowPulse 2s ease-in-out infinite alternate;
+    animation: magicalAuraPulse 3s ease-in-out infinite alternate;
     pointer-events: none;
 }
 
-@keyframes treeGlow {
+.sparkle-effects {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: radial-gradient(circle, #fff, #ffb6c1);
+    border-radius: 50%;
+    animation: sparkleFloat 2s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.sparkle-1 { top: 50px; left: 80px; animation-delay: 0s; }
+.sparkle-2 { top: 120px; left: 60px; animation-delay: 0.3s; }
+.sparkle-3 { top: 200px; left: 90px; animation-delay: 0.6s; }
+.sparkle-4 { top: 80px; right: 80px; animation-delay: 0.2s; }
+.sparkle-5 { top: 150px; right: 60px; animation-delay: 0.5s; }
+.sparkle-6 { top: 250px; right: 90px; animation-delay: 0.8s; }
+.sparkle-7 { top: 100px; left: 50%; animation-delay: 0.4s; }
+.sparkle-8 { top: 180px; left: 50%; animation-delay: 0.7s; }
+
+/* Animations */
+@keyframes cherryTreeGlow {
     0% { 
-        filter: drop-shadow(0 0 20px rgba(144, 238, 144, 0.5));
+        filter: drop-shadow(0 0 30px rgba(255, 182, 193, 0.6));
         transform: scale(1);
     }
     100% { 
-        filter: drop-shadow(0 0 40px rgba(144, 238, 144, 0.8));
-        transform: scale(1.02);
+        filter: drop-shadow(0 0 50px rgba(255, 182, 193, 0.9));
+        transform: scale(1.01);
     }
 }
 
-@keyframes leafSparkle {
+@keyframes blossomSparkle {
     0%, 100% { 
         transform: scale(1) rotate(0deg);
-        box-shadow: 0 0 10px rgba(144, 238, 144, 0.6);
+        box-shadow: 0 0 15px rgba(255, 182, 193, 0.8);
     }
     50% { 
-        transform: scale(1.2) rotate(180deg);
-        box-shadow: 0 0 20px rgba(144, 238, 144, 1);
+        transform: scale(1.3) rotate(180deg);
+        box-shadow: 0 0 25px rgba(255, 182, 193, 1);
     }
 }
 
-@keyframes treeGlowPulse {
+@keyframes magicalAuraPulse {
     0% { opacity: 0.3; }
     100% { opacity: 0.7; }
+}
+
+@keyframes sparkleFloat {
+    0%, 100% { 
+        transform: translateY(0px) scale(1);
+        opacity: 0.7;
+    }
+    50% { 
+        transform: translateY(-10px) scale(1.2);
+        opacity: 1;
+    }
 }
 
 /* 3 món quà */
@@ -768,6 +896,340 @@ body {
     }
 }
 
+/* Giao diện 3 câu hỏi tương tác */
+.questions-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.questions-overlay.show {
+    display: flex;
+}
+
+.questions-container {
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 221, 68, 0.3);
+    animation: slideInUp 0.6s ease-out;
+}
+
+.questions-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.questions-title {
+    font-size: 2.5rem;
+    color: #ffdd44;
+    text-shadow: 0 0 20px rgba(255, 221, 68, 0.8);
+    margin-bottom: 10px;
+    animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+.questions-subtitle {
+    font-size: 1.2rem;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.question-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 221, 68, 0.2);
+    animation: cardSlideIn 0.5s ease-out;
+}
+
+.question-number {
+    font-size: 1rem;
+    color: #ffdd44;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.question-text {
+    font-size: 1.3rem;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 25px;
+    line-height: 1.5;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+.answer-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.answer-btn {
+    background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+    border: none;
+    border-radius: 10px;
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.answer-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+    background: linear-gradient(45deg, #ff5252, #ff7979);
+}
+
+.answer-btn.correct {
+    background: linear-gradient(45deg, #4caf50, #66bb6a);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+    animation: correctPulse 0.6s ease-out;
+}
+
+.answer-btn.incorrect {
+    background: linear-gradient(45deg, #f44336, #ef5350);
+    box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
+    animation: incorrectShake 0.6s ease-out;
+}
+
+.questions-footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.close-questions-btn {
+    background: linear-gradient(45deg, #666, #888);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 30px;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.close-questions-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Giao diện pháo hoa toàn màn hình */
+.fireworks-show {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0c0c0c, #1a1a2e, #16213e);
+    z-index: 2000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.fireworks-show.show {
+    display: flex;
+}
+
+.fireworks-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 221, 68, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(76, 175, 80, 0.1) 0%, transparent 50%);
+    animation: backgroundPulse 3s ease-in-out infinite alternate;
+}
+
+.professional-fireworks {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.celebration-text {
+    text-align: center;
+    z-index: 10;
+    animation: celebrationSlideIn 1s ease-out;
+}
+
+.celebration-title {
+    font-size: 4rem;
+    color: #ffdd44;
+    text-shadow: 
+        0 0 20px rgba(255, 221, 68, 0.8),
+        0 0 40px rgba(255, 221, 68, 0.6),
+        0 0 60px rgba(255, 221, 68, 0.4);
+    margin-bottom: 20px;
+    animation: titleBounce 2s ease-in-out infinite;
+}
+
+.celebration-message {
+    font-size: 1.8rem;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    margin-bottom: 10px;
+}
+
+.celebration-submessage {
+    font-size: 1.2rem;
+    color: #ffb6c1;
+    text-shadow: 0 0 5px rgba(255, 182, 193, 0.5);
+    margin-bottom: 40px;
+}
+
+.back-to-main-btn {
+    background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+    border: none;
+    border-radius: 15px;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.back-to-main-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6);
+}
+
+/* Pháo hoa chuyên nghiệp */
+.professional-firework {
+    position: absolute;
+    border-radius: 50%;
+    animation: professionalExplode 3s ease-out forwards;
+}
+
+.professional-firework.type1 {
+    background: radial-gradient(circle, #ff6b6b, #ff8e8e, #ffa8a8);
+    box-shadow: 0 0 30px rgba(255, 107, 107, 0.8);
+}
+
+.professional-firework.type2 {
+    background: radial-gradient(circle, #4ecdc4, #7fdbda, #a8e6cf);
+    box-shadow: 0 0 30px rgba(78, 205, 196, 0.8);
+}
+
+.professional-firework.type3 {
+    background: radial-gradient(circle, #ffe66d, #ffd93d, #ffb142);
+    box-shadow: 0 0 30px rgba(255, 230, 109, 0.8);
+}
+
+.professional-firework.type4 {
+    background: radial-gradient(circle, #ff9ff3, #ff6ec7, #ff8cc8);
+    box-shadow: 0 0 30px rgba(255, 159, 243, 0.8);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes slideInUp {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes cardSlideIn {
+    0% {
+        transform: translateX(-30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes titleGlow {
+    0% { text-shadow: 0 0 20px rgba(255, 221, 68, 0.8); }
+    100% { text-shadow: 0 0 30px rgba(255, 221, 68, 1); }
+}
+
+@keyframes correctPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes incorrectShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes backgroundPulse {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.7; }
+}
+
+@keyframes celebrationSlideIn {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes titleBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes professionalExplode {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .main-greeting {
@@ -792,25 +1254,30 @@ body {
         height: 80px;
     }
     
-    /* Cây cổ thụ responsive */
-    .ancient-tree {
-        width: 150px;
-        height: 220px;
+    /* Cây anh đào cổ thụ responsive */
+    .ancient-cherry-tree {
+        width: 300px;
+        height: 375px;
     }
     
-    .tree-trunk {
-        width: 30px;
-        height: 90px;
-    }
-    
-    .tree-branches {
-        width: 140px;
+    .main-trunk {
+        width: 60px;
         height: 150px;
     }
     
-    .leaf {
-        width: 8px;
-        height: 8px;
+    .main-branches {
+        width: 260px;
+        height: 225px;
+    }
+    
+    .blossom {
+        width: 12px;
+        height: 12px;
+    }
+    
+    .sparkle {
+        width: 3px;
+        height: 3px;
     }
     
     /* 3 món quà responsive */
@@ -842,6 +1309,42 @@ body {
         font-size: 1rem;
         padding: 15px 20px;
         max-width: 90%;
+    }
+    
+    /* Responsive cho giao diện câu hỏi */
+    .questions-container {
+        padding: 20px;
+        max-width: 95%;
+    }
+    
+    .questions-title {
+        font-size: 2rem;
+    }
+    
+    .question-text {
+        font-size: 1.1rem;
+    }
+    
+    .answer-options {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .answer-btn {
+        padding: 12px 15px;
+        font-size: 1rem;
+    }
+    
+    .celebration-title {
+        font-size: 2.5rem;
+    }
+    
+    .celebration-message {
+        font-size: 1.4rem;
+    }
+    
+    .celebration-submessage {
+        font-size: 1rem;
     }
 }
 

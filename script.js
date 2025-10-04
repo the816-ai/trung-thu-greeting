@@ -408,34 +408,275 @@ function showGiftMessage(message) {
     }, 4000);
 }
 
-// Hiệu ứng cây cổ thụ
+// Hiệu ứng cây anh đào cổ thụ
 function addAncientTreeEffects() {
-    const ancientTree = document.querySelector('.ancient-tree');
+    const ancientTree = document.querySelector('.ancient-cherry-tree');
     
     if (ancientTree) {
         ancientTree.addEventListener('click', () => {
-            // Tạo hiệu ứng lá rơi
-            const leaves = document.querySelectorAll('.leaf');
-            leaves.forEach((leaf, index) => {
+            // Tạo hiệu ứng hoa anh đào rơi
+            const blossoms = document.querySelectorAll('.blossom');
+            blossoms.forEach((blossom, index) => {
                 setTimeout(() => {
-                    leaf.style.animation = 'none';
-                    leaf.style.transform = 'translateY(200px) rotate(720deg)';
-                    leaf.style.opacity = '0';
-                    leaf.style.transition = 'all 3s ease-out';
+                    blossom.style.animation = 'none';
+                    blossom.style.transform = 'translateY(300px) rotate(1080deg) scale(0.5)';
+                    blossom.style.opacity = '0';
+                    blossom.style.transition = 'all 4s ease-out';
+                }, index * 50);
+            });
+            
+            // Tạo hiệu ứng sparkle bay lên
+            const sparkles = document.querySelectorAll('.sparkle');
+            sparkles.forEach((sparkle, index) => {
+                setTimeout(() => {
+                    sparkle.style.animation = 'none';
+                    sparkle.style.transform = 'translateY(-100px) scale(2)';
+                    sparkle.style.opacity = '0';
+                    sparkle.style.transition = 'all 2s ease-out';
                 }, index * 100);
             });
             
-            // Khôi phục sau 4 giây
+            // Tạo hiệu ứng pháo hoa xung quanh cây
+            const rect = ancientTree.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            // Tạo pháo hoa vòng tròn xung quanh cây
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    const angle = (i * 45) * Math.PI / 180;
+                    const distance = 150;
+                    const x = centerX + Math.cos(angle) * distance;
+                    const y = centerY + Math.sin(angle) * distance;
+                    createCircleFirework(x, y);
+                }, i * 200);
+            }
+            
+            // Khôi phục sau 5 giây
             setTimeout(() => {
-                leaves.forEach(leaf => {
-                    leaf.style.animation = 'leafSparkle 3s ease-in-out infinite';
-                    leaf.style.transform = 'translateY(0) rotate(0deg)';
-                    leaf.style.opacity = '1';
-                    leaf.style.transition = 'none';
+                blossoms.forEach(blossom => {
+                    blossom.style.animation = 'blossomSparkle 4s ease-in-out infinite';
+                    blossom.style.transform = 'translateY(0) rotate(0deg) scale(1)';
+                    blossom.style.opacity = '1';
+                    blossom.style.transition = 'none';
                 });
-            }, 4000);
+                
+                sparkles.forEach(sparkle => {
+                    sparkle.style.animation = 'sparkleFloat 2s ease-in-out infinite';
+                    sparkle.style.transform = 'translateY(0) scale(1)';
+                    sparkle.style.opacity = '0.7';
+                    sparkle.style.transition = 'none';
+                });
+            }, 5000);
+        });
+        
+        // Hiệu ứng hover cho cây
+        ancientTree.addEventListener('mouseenter', () => {
+            ancientTree.style.transform = 'scale(1.05)';
+            ancientTree.style.filter = 'drop-shadow(0 0 60px rgba(255, 182, 193, 1))';
+        });
+        
+        ancientTree.addEventListener('mouseleave', () => {
+            ancientTree.style.transform = 'scale(1)';
+            ancientTree.style.filter = 'drop-shadow(0 0 30px rgba(255, 182, 193, 0.6))';
         });
     }
+}
+
+// Quản lý 3 câu hỏi tương tác
+let currentQuestion = 1;
+let correctAnswers = 0;
+let questionsAnswered = 0;
+
+function initQuestionsSystem() {
+    // Thêm nút mở câu hỏi vào chữ chúc mừng
+    const greetingText = document.querySelector('.greeting-text');
+    const questionsBtn = document.createElement('button');
+    questionsBtn.className = 'questions-trigger-btn';
+    questionsBtn.innerHTML = '🎯 Thử thách 3 câu hỏi!';
+    questionsBtn.style.cssText = `
+        background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+        border: none;
+        border-radius: 25px;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        color: white;
+        cursor: pointer;
+        margin-top: 20px;
+        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        transition: all 0.3s ease;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    `;
+    
+    questionsBtn.addEventListener('click', () => {
+        showQuestions();
+    });
+    
+    questionsBtn.addEventListener('mouseenter', () => {
+        questionsBtn.style.transform = 'translateY(-3px) scale(1.05)';
+        questionsBtn.style.boxShadow = '0 12px 35px rgba(255, 107, 107, 0.6)';
+    });
+    
+    questionsBtn.addEventListener('mouseleave', () => {
+        questionsBtn.style.transform = 'translateY(0) scale(1)';
+        questionsBtn.style.boxShadow = '0 8px 25px rgba(255, 107, 107, 0.4)';
+    });
+    
+    greetingText.appendChild(questionsBtn);
+    
+    // Xử lý nút đóng câu hỏi
+    document.getElementById('closeQuestionsBtn').addEventListener('click', () => {
+        hideQuestions();
+    });
+    
+    // Xử lý nút quay lại trang chính
+    document.getElementById('backToMainBtn').addEventListener('click', () => {
+        hideFireworksShow();
+    });
+    
+    // Xử lý các câu trả lời
+    setupAnswerHandlers();
+}
+
+function showQuestions() {
+    const overlay = document.getElementById('questionsOverlay');
+    overlay.classList.add('show');
+    currentQuestion = 1;
+    correctAnswers = 0;
+    questionsAnswered = 0;
+    showQuestion(1);
+}
+
+function hideQuestions() {
+    const overlay = document.getElementById('questionsOverlay');
+    overlay.classList.remove('show');
+}
+
+function showQuestion(questionNum) {
+    // Ẩn tất cả câu hỏi
+    document.querySelectorAll('.question-card').forEach(card => {
+        card.style.display = 'none';
+    });
+    
+    // Hiển thị câu hỏi hiện tại
+    const currentCard = document.getElementById(`question${questionNum}`);
+    currentCard.style.display = 'block';
+    currentCard.style.animation = 'cardSlideIn 0.5s ease-out';
+}
+
+function setupAnswerHandlers() {
+    document.querySelectorAll('.answer-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const isCorrect = e.target.getAttribute('data-correct') === 'true';
+            const allButtons = e.target.parentElement.querySelectorAll('.answer-btn');
+            
+            // Vô hiệu hóa tất cả nút
+            allButtons.forEach(button => {
+                button.disabled = true;
+            });
+            
+            // Đánh dấu câu trả lời
+            if (isCorrect) {
+                e.target.classList.add('correct');
+                correctAnswers++;
+            } else {
+                e.target.classList.add('incorrect');
+                // Tìm và đánh dấu câu trả lời đúng
+                allButtons.forEach(button => {
+                    if (button.getAttribute('data-correct') === 'true') {
+                        button.classList.add('correct');
+                    }
+                });
+            }
+            
+            questionsAnswered++;
+            
+            // Chuyển sang câu hỏi tiếp theo sau 2 giây
+            setTimeout(() => {
+                if (currentQuestion < 3) {
+                    currentQuestion++;
+                    showQuestion(currentQuestion);
+                } else {
+                    // Kết thúc câu hỏi
+                    setTimeout(() => {
+                        if (correctAnswers === 3) {
+                            showFireworksShow();
+                        } else {
+                            hideQuestions();
+                            showResultMessage();
+                        }
+                    }, 1000);
+                }
+            }, 2000);
+        });
+    });
+}
+
+function showFireworksShow() {
+    hideQuestions();
+    const fireworksShow = document.getElementById('fireworksShow');
+    fireworksShow.classList.add('show');
+    
+    // Bắt đầu pháo hoa chuyên nghiệp
+    startProfessionalFireworks();
+}
+
+function hideFireworksShow() {
+    const fireworksShow = document.getElementById('fireworksShow');
+    fireworksShow.classList.remove('show');
+}
+
+function startProfessionalFireworks() {
+    const container = document.getElementById('professionalFireworks');
+    
+    // Tạo pháo hoa liên tục
+    const fireworksInterval = setInterval(() => {
+        createProfessionalFirework(container);
+    }, 500);
+    
+    // Dừng pháo hoa sau 30 giây
+    setTimeout(() => {
+        clearInterval(fireworksInterval);
+    }, 30000);
+}
+
+function createProfessionalFirework(container) {
+    const firework = document.createElement('div');
+    firework.className = 'professional-firework';
+    
+    // Vị trí ngẫu nhiên
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight;
+    
+    // Kích thước ngẫu nhiên (to hơn)
+    const size = 60 + Math.random() * 80; // 60-140px
+    
+    // Loại pháo hoa ngẫu nhiên
+    const types = ['type1', 'type2', 'type3', 'type4'];
+    const type = types[Math.floor(Math.random() * types.length)];
+    
+    firework.classList.add(type);
+    firework.style.left = x + 'px';
+    firework.style.top = y + 'px';
+    firework.style.width = size + 'px';
+    firework.style.height = size + 'px';
+    
+    container.appendChild(firework);
+    
+    // Xóa pháo hoa sau animation
+    setTimeout(() => {
+        if (firework.parentNode) {
+            firework.parentNode.removeChild(firework);
+        }
+    }, 3000);
+}
+
+function showResultMessage() {
+    const message = correctAnswers === 3 
+        ? '🎉 Chúc mừng! Bạn đã trả lời đúng tất cả câu hỏi!'
+        : `😊 Bạn đã trả lời đúng ${correctAnswers}/3 câu hỏi. Hãy thử lại nhé!`;
+    
+    showGiftMessage(message);
 }
 
 // Khởi tạo tất cả hiệu ứng
@@ -450,6 +691,7 @@ document.addEventListener('DOMContentLoaded', () => {
     addFullScreenEffect();
     addGiftInteractions();
     addAncientTreeEffects();
+    initQuestionsSystem();
     
     // Thêm hiệu ứng âm thanh nếu người dùng tương tác
     document.addEventListener('click', () => {
